@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Roots – Innovazione Sostenibile</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #2ecc71;
+    --bg: #f4f7f9;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-muted: #546e7a;
+    --nav-bg: #1a1a1a;
+    --shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+body.dark-theme {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --text: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --nav-bg: #000000;
+    --shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s, color 0.4s;
+    line-height: 1.6;
+}
+
+#progress-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+    background: transparent; z-index: 1001;
+}
+#progress-bar { width: 0%; height: 100%; background: var(--primary); transition: width 0.1s; }
+
+nav {
+    background: var(--nav-bg); padding: 15px 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 1000;
+}
+nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+
+.theme-toggle {
+    background: var(--primary); border: none; padding: 8px 18px;
+    border-radius: 20px; color: white; cursor: pointer; font-weight: bold;
+}
+
+.hero {
+    height: 70vh;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070');
+    background-size: cover; background-position: center;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
+}
+.hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); margin: 0; font-weight: 800; letter-spacing: -2px; }
+
+section { padding: 60px 10%; max-width: 1100px; margin: auto; opacity: 0; transform: translateY(30px); transition: 0.8s; }
+section.show { opacity: 1; transform: translateY(0); }
+
+.card {
+    background: var(--card-bg); padding: 40px; border-radius: 24px;
+    box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05);
+}
+
+h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
+.main-img { width: 100%; height: 350px; object-fit: cover; border-radius: 18px; margin: 20px 0; }
+
+.timeline { margin-top: 30px; border-left: 3px solid var(--primary); padding-left: 20px; }
+.timeline-item { margin-bottom: 25px; position: relative; }
+.timeline-item::before {
+    content: ''; position: absolute; left: -29px; top: 5px;
+    width: 15px; height: 15px; background: var(--primary); border-radius: 50%;
+}
+
+.chatbot-container { position: fixed; bottom: 25px; right: 25px; z-index: 1002; }
+#chat-toggle {
+    width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: white; font-size: 26px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.chatbot-window {
+    position: absolute; bottom: 80px; right: 0; width: 340px;
+    background: var(--card-bg); border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    display: none; flex-direction: column; overflow: hidden; border: 1px solid var(--primary);
+}
+.chatbot-header { background: var(--primary); color: white; padding: 18px; font-weight: bold; }
+.chat-output { height: 220px; overflow-y: auto; padding: 15px; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+.chat-options { padding: 10px; height: 160px; overflow-y: auto; background: rgba(0,0,0,0.02); }
+
+.question-btn {
+    display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 8px 12px;
+    background: var(--card-bg); color: var(--text); border: 1px solid var(--primary);
+    border-radius: 10px; cursor: pointer; font-size: 0.8rem;
+}
+.question-btn:hover { background: var(--primary); color: white; }
+
+.btn-cta {
+    background: var(--primary); color: white; padding: 14px 35px;
+    border-radius: 50px; text-decoration: none; font-weight: 800; display: inline-block; margin-top: 20px;
+    transition: transform 0.2s; border: none; cursor: pointer;
+}
+.btn-cta:hover { transform: scale(1.05); }
+
+footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
+</style>
+</head>
+
+<body>
+
+<div id="progress-container"><div id="progress-bar"></div></div>
+
+<nav>
+    <div class="logo" style="color:var(--primary); font-weight:800; font-size:1.5rem;">E-ROOTS</div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+</nav>
+
+<div class="hero">
+    <h1>E-Roots</h1>
+    <p style="font-size: 1.3rem;">L'innovazione digitale al servizio del pianeta.</p>
+    <a href="#quiz" class="btn-cta">Partecipa</a>
+</div>
+
+<section id="problema">
+    <div class="card">
+        <h2>La Sfida Ambientale</h2>
+        <p>Il cambiamento climatico e l'inquinamento richiedono soluzioni urgenti. E-Roots promuove il digitale come strumento per monitorare e ridurre il nostro impatto ambientale.</p>
+        <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Foresta">
+    </div>
+</section>
+
+<section id="timeline">
+    <div class="card">
+        <h2>Il Percorso Digitale</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>📡 Monitoraggio</strong>
+                <p>Uso di sensori per raccogliere dati ambientali in tempo reale.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>🧠 Analisi</strong>
+                <p>L'IA elabora i dati per identificare aree di spreco energetico.</p>
+            </div>
+            <div class="timeline-item">
+                <strong>🌱 Azione</strong>
+                <p>Implementazione di soluzioni smart per ridurre le emissioni.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="grafico">
+    <div class="card">
+        <h2>Risultati Community (Ruoli)</h2>
+        <p>Distribuzione dei partecipanti in base alla loro consapevolezza ecologica.</p>
+        <canvas id="myChart"></canvas>
+    </div>
+</section>
+
+<section id="quiz" style="text-align: center; padding-bottom: 20px;">
+    <div class="card">
+        <h2>Fai il Quiz</h2>
+        <p>Verifica il tuo livello di sostenibilità e scopri il tuo ruolo.</p>
+        <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLScVqnxy_huKFoYHJo575nPb1BhBCjf-cGUKhKP4-r0vfRnF3w/viewform" target="_blank">Inizia Quiz</a>
+    </div>
+</section>
+
+<section id="download" style="text-align: center; padding-top: 0;">
+    <div class="card" style="background: rgba(46, 204, 113, 0.1); border: 2px dashed var(--primary);">
+        <h2>Approfondisci l'argomento</h2>
+        <p>Scarica il documento ufficiale <b>progetto_finito.pdf</b> per consultare tutti i dettagli della nostra ricerca.</p>
+        <a class="btn-cta" href="https://drive.google.com/uc?export=download&id=1k-Bh9rDbIniRiLZrPle7eek0bqIq3z8i" target="_blank" style="background: #2c3e50;">
+            📥 Scarica il Report (PDF)
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p>E-Roots © 2026</p>
+</footer>
+
+<div class="chatbot-container">
+    <div id="chat-toggle" onclick="toggleChat()">🌱</div>
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chatbot-header">Assistente E-Roots</div>
+        <div class="chat-output" id="chatOutput">
+            <p><b>IA:</b> Ciao! Scegli una delle 10 domande per saperne di più.</p>
+        </div>
+        <div class="chat-options">
+            <button class="question-btn" onclick="ask('energia')">1. Cos'è l'energia sostenibile?</button>
+            <button class="question-btn" onclick="ask('ridurre')">2. Come ridurre i consumi?</button>
+            <button class="question-btn" onclick="ask('inquinamento')">3. Cos'è l'inquinamento?</button>
+            <button class="question-btn" onclick="ask('digitale')">4. Cos'è il digitale sostenibile?</button>
+            <button class="question-btn" onclick="ask('ia')">5. Cos'è l'IA per l'ambiente?</button>
+            <button class="question-btn" onclick="ask('iot')">6. Cos'è l'IoT?</button>
+            <button class="question-btn" onclick="ask('sostenibilita')">7. Perché la sostenibilità?</button>
+            <button class="question-btn" onclick="ask('aiutare')">8. Come aiutare l'ambiente?</button>
+            <button class="question-btn" onclick="ask('rinnovabili')">9. Cosa sono le rinnovabili?</button>
+            <button class="question-btn" onclick="ask('futuro')">10. Come sarà il futuro?</button>
+        </div>
+    </div>
+</div>
+
+<script>
+window.onscroll = function() {
+    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let scrolled = (winScroll / height) * 100;
+    document.getElementById("progress-bar").style.width = scrolled + "%";
+};
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+}
+
+const obs = new IntersectionObserver((es) => {
+    es.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
+}, { threshold: 0.1 });
+document.querySelectorAll("section").forEach(s => obs.observe(s));
+
+function toggleChat() {
+    const win = document.getElementById("chatWindow");
+    win.style.display = (win.style.display === "flex") ? "none" : "flex";
+}
+
+function ask(topic) {
+    const out = document.getElementById("chatOutput");
+    let a = "Ottima domanda! 🌱";
+    if(topic === 'energia') a = "L'energia sostenibile deriva da fonti rinnovabili che non si esauriscono mai.";
+    if(topic === 'ridurre') a = "Spegni i dispositivi non usati e usa lampadine a LED per risparmiare.";
+    if(topic === 'inquinamento') a = "L'inquinamento danneggia aria e acqua; il digitale aiuta a monitorarlo.";
+    if(topic === 'digitale') a = "Il digitale sostenibile ottimizza le risorse per inquinare meno.";
+    if(topic === 'ia') a = "L'IA analizza i dati per rendere le città e le fabbriche più efficienti.";
+    if(topic === 'iot') a = "L'Internet of Things connette sensori per gestire meglio acqua ed energia.";
+    if(topic === 'sostenibilita') a = "Serve a proteggere le risorse del pianeta per le generazioni future.";
+    if(topic === 'aiutare') a = "Puoi aiutare riciclando, riducendo lo spreco e scegliendo prodotti green.";
+    if(topic === 'rinnovabili') a = "Sono sole, vento e acqua: fonti pulite e inesauribili.";
+    if(topic === 'futuro') a = "Il futuro sarà più verde grazie alla tecnologia e alle nostre scelte oggi.";
+
+    out.innerHTML += `<p><b>IA:</b> ${a}</p>`;
+    out.scrollTop = out.scrollHeight;
+}
+
+const ctx = document.getElementById('myChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Green Hero', 'Eco in crescita', 'Energy Spreader'],
+        datasets: [{
+            label: 'Numero Utenti',
+            data: [8, 12, 5],
+            backgroundColor: ['#2ecc71', '#3498db', '#e74c3c'],
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(200, 200, 200, 0.08)' },
+                ticks: { color: 'rgba(150, 150, 150, 0.8)' }
+            },
+            x: {
+                grid: { display: false },
+                ticks: { color: 'rgba(150, 150, 150, 0.8)' }
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
