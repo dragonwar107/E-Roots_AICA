@@ -203,20 +203,42 @@ async function updateChart() {
         const data = await response.text();
         const rows = data.split('\n').slice(1); 
 
-        let counts = { 'Green Hero': 0, 'Eco in crescita': 0, 'Energy Spreader': 0 };
+        let counts = { 
+            'Green Hero': 0, 
+            'Eco in crescita': 0, 
+            'Energy Spreader': 0 
+        };
 
         rows.forEach(row => {
             const columns = row.split(',');
-            const ruolo = columns[columns.length - 1]?.trim().replace(/"/g, ""); 
-            if (counts[ruolo] !== undefined) counts[ruolo]++;
+            let valore = parseInt(columns[columns.length - 1]?.replace(/"/g, "").trim());
+
+            if (!isNaN(valore)) {
+                if (valore >= 12 && valore <= 16) {
+                    counts['Green Hero']++;
+                } else if (valore >= 7 && valore <= 11) {
+                    counts['Eco in crescita']++;
+                } else if (valore >= 0 && valore <= 6) {
+                    counts['Energy Spreader']++;
+                }
+            }
         });
 
-        myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
+        myChart.data.datasets[0].data = [
+            counts['Green Hero'], 
+            counts['Eco in crescita'], 
+            counts['Energy Spreader']
+        ];
+
         myChart.update();
-    } catch (e) { console.error("Errore caricamento dati:", e); }
+
+    } catch (e) { 
+        console.error("Errore caricamento dati:", e); 
+    }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
+
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -227,11 +249,17 @@ const myChart = new Chart(ctx, {
             borderRadius: 8
         }]
     },
-    options: { responsive: true, plugins: { legend: { display: false } } }
+    options: { 
+        responsive: true, 
+        plugins: { legend: { display: false } } 
+    }
 });
 
+// aggiornamento iniziale
 updateChart();
 
+// aggiornamento automatico ogni 5 secondi
+setInterval(updateChart, 5000);
 // --- LOGICA CHATBOT ---
 function toggleChat() {
     const win = document.getElementById("chatWindow");
