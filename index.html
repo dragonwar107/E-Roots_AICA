@@ -54,7 +54,7 @@ nav {
 }
 
 .hero {
-    height: 90vh; /* Aumentato per contenere più testo */
+    height: 90vh;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
     url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070');
     background-size: cover; background-position: center;
@@ -83,7 +83,7 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 }
 .btn-cta:hover { transform: scale(1.05); }
 
-/* CHATBOT */
+/* CHATBOT POTENZIATO */
 .chatbot-container { position: fixed; bottom: 25px; right: 25px; z-index: 1002; }
 #chat-toggle {
     width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
@@ -91,18 +91,20 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
     color: white; font-size: 26px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 .chatbot-window {
-    position: absolute; bottom: 80px; right: 0; width: 340px;
-    background: var(--card-bg); border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    position: absolute; bottom: 80px; right: 0; width: 360px;
+    background: var(--card-bg); border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     display: none; flex-direction: column; overflow: hidden; border: 1px solid var(--primary);
 }
-.chatbot-header { background: var(--primary); color: white; padding: 18px; font-weight: bold; }
-.chat-output { height: 200px; overflow-y: auto; padding: 15px; font-size: 0.9rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
-.chat-options { padding: 10px; height: 150px; overflow-y: auto; background: rgba(0,0,0,0.02); }
+.chatbot-header { background: var(--primary); color: white; padding: 18px; font-weight: bold; display: flex; justify-content: space-between; }
+.chat-output { height: 250px; overflow-y: auto; padding: 15px; font-size: 0.9rem; border-bottom: 1px solid rgba(0,0,0,0.05); background: #fdfdfd; }
+.dark-theme .chat-output { background: #252525; }
+.chat-options { padding: 10px; height: 180px; overflow-y: auto; background: rgba(0,0,0,0.02); }
 .question-btn {
-    display: block; width: 100%; text-align: left; margin-bottom: 5px; padding: 8px;
+    display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 10px;
     background: var(--card-bg); color: var(--text); border: 1px solid var(--primary);
-    border-radius: 8px; cursor: pointer; font-size: 0.8rem;
+    border-radius: 10px; cursor: pointer; font-size: 0.85rem; transition: 0.2s;
 }
+.question-btn:hover { background: var(--primary); color: white; }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
 </style>
@@ -128,11 +130,11 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <section id="problema">
     <div class="card">
         <h2>La Sfida Ambientale</h2>
-        <p>Il cambiamento climatico richiede soluzioni urgenti e coordinate. E-Roots promuove il digitale come strumento per monitorare e ridurre il nostro impatto ambientale globale.</p>
+        <p>Il cambiamento climatico richiede soluzioni urgenti. E-Roots promuove il digitale come strumento per monitorare e ridurre il nostro impatto ambientale.</p>
         <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Foresta">
         
         <p style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 12px; margin-top: 20px; font-weight: 600;">
-            💡 Hai domande su come la tecnologia aiuta l'ambiente? Clicca sull'icona della piantina 🌱 che vedi in basso a destra per parlare con il nostro assistente virtuale!
+            💡 Hai domande? Clicca sull'icona della piantina 🌱 in basso a destra per parlare con il nostro assistente virtuale (ora con 20 risposte!).
         </p>
     </div>
 </section>
@@ -140,7 +142,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <section id="grafico">
     <div class="card">
         <h2>Risultati Community (Live)</h2>
-        <p>Distribuzione dei partecipanti in base ai risultati del quiz caricati in tempo reale dal database.</p>
+        <p>Ecco come si sta muovendo la nostra community in tempo reale basato sul quiz.</p>
         <canvas id="myChart"></canvas>
     </div>
 </section>
@@ -156,7 +158,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <section id="download" style="text-align: center; padding-top: 0;">
     <div class="card" style="background: rgba(46, 204, 113, 0.1); border: 2px dashed var(--primary);">
         <h2>Area Download</h2>
-        <p>Scarica il report ufficiale <b>progetto_finito.pdf</b> per consultare tutti i dettagli della nostra ricerca.</p>
+        <p>Scarica il report ufficiale per consultare tutti i dettagli della nostra ricerca.</p>
         <a class="btn-cta" href="https://drive.google.com/uc?export=download&id=1k-Bh9rDbIniRiLZrPle7eek0bqIq3z8i" target="_blank" style="background: #2c3e50;">
             📥 Scarica il Report (PDF)
         </a>
@@ -170,12 +172,14 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <div class="chatbot-container">
     <div id="chat-toggle" onclick="toggleChat()">🌱</div>
     <div class="chatbot-window" id="chatWindow">
-        <div class="chatbot-header">Assistente E-Roots</div>
-        <div class="chat-output" id="chatOutput">
-            <p><b>IA:</b> Ciao! Scegli una domanda per saperne di più.</p>
+        <div class="chatbot-header">
+            <span>Assistente E-Roots</span>
+            <span onclick="toggleChat()" style="cursor:pointer">✖</span>
         </div>
-        <div class="chat-options" id="options">
-            </div>
+        <div class="chat-output" id="chatOutput">
+            <p><b>IA:</b> Ciao! Sono l'assistente di E-Roots. Scegli una delle 20 domande per approfondire!</p>
+        </div>
+        <div class="chat-options" id="options"></div>
     </div>
 </div>
 
@@ -194,8 +198,8 @@ const obs = new IntersectionObserver((es) => {
 }, { threshold: 0.1 });
 document.querySelectorAll("section").forEach(s => obs.observe(s));
 
-// --- LOGICA GRAFICO DINAMICO ---
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjWQHTFm7IvDfcJkRZgrcRkAsfCuHExoRD9sEWOm0dA0YWaTTIl27bhyBOQ_cakKp9nNBpaTQsgLH8/pub?gid=1822249008&single=true&output=csv';
+// --- LOGICA GRAFICO DINAMICO (COLONNA 9) ---
+const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRndRkw_3MQlN4xojmlirPIAu8j9_C1R88u_1v2XxEyptMcqZmoQJcM1cq9355TC5DPAx8JRQVjdg0q/pub?output=csv';
 
 async function updateChart() {
     try {
@@ -203,47 +207,27 @@ async function updateChart() {
         const data = await response.text();
         const rows = data.split('\n').slice(1); 
 
-        let counts = { 
-            'Green Hero': 0, 
-            'Eco in crescita': 0, 
-            'Energy Spreader': 0 
-        };
+        let counts = { 'Green Hero': 0, 'Eco in crescita': 0, 'Energy Spreader': 0 };
 
         rows.forEach(row => {
-            const columns = row.split(',');
-            let valore = parseInt(columns[columns.length - 1]?.replace(/"/g, "").trim());
-
-            if (!isNaN(valore)) {
-                if (valore >= 12 && valore <= 16) {
-                    counts['Green Hero']++;
-                } else if (valore >= 7 && valore <= 11) {
-                    counts['Eco in crescita']++;
-                } else if (valore >= 0 && valore <= 6) {
-                    counts['Energy Spreader']++;
-                }
-            }
+            const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            // Indice 9 come richiesto
+            const ruolo = columns[9]?.trim().replace(/"/g, ""); 
+            if (counts[ruolo] !== undefined) counts[ruolo]++;
         });
 
-        myChart.data.datasets[0].data = [
-            counts['Green Hero'], 
-            counts['Eco in crescita'], 
-            counts['Energy Spreader']
-        ];
-
+        myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
         myChart.update();
-
-    } catch (e) { 
-        console.error("Errore caricamento dati:", e); 
-    }
+    } catch (e) { console.error("Errore caricamento dati:", e); }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
-
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Green Hero', 'Eco in crescita', 'Energy Spreader'],
         datasets: [{
+            label: 'Partecipanti',
             data: [0, 0, 0],
             backgroundColor: ['#2ecc71', '#3498db', '#e74c3c'],
             borderRadius: 8
@@ -251,26 +235,40 @@ const myChart = new Chart(ctx, {
     },
     options: { 
         responsive: true, 
-        plugins: { legend: { display: false } } 
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
     }
 });
 
-// aggiornamento iniziale
 updateChart();
 
-// aggiornamento automatico ogni 5 secondi
-setInterval(updateChart, 5000);
-// --- LOGICA CHATBOT ---
+// --- CHATBOT CON 20 DOMANDE ---
 function toggleChat() {
     const win = document.getElementById("chatWindow");
     win.style.display = (win.style.display === "flex") ? "none" : "flex";
 }
 
 const questions = [
-    {q: "Cos'è l'energia sostenibile?", a: "È energia ricavata da fonti che non si esauriscono, come sole e vento."},
-    {q: "Come ridurre i consumi?", a: "Spegni i dispositivi in standby e usa il tema scuro sugli schermi OLED."},
-    {q: "Cos'è l'IA per l'ambiente?", a: "Algoritmi che ottimizzano i trasporti e il consumo energetico delle città."},
-    {q: "Cosa posso fare io?", a: "Partecipa al nostro quiz e scopri come migliorare le tue abitudini digitali!"}
+    {q: "1. Cos'è l'energia sostenibile?", a: "È energia da fonti che non si esauriscono, come sole, vento e acqua."},
+    {q: "2. Come ridurre i consumi digitali?", a: "Chiudi le schede inutilizzate, svuota il cestino mail e usa il tema scuro."},
+    {q: "3. Cos'è l'IA per l'ambiente?", a: "Algoritmi che ottimizzano i consumi energetici e i trasporti nelle città."},
+    {q: "4. Perché le email inquinano?", a: "Ogni mail è memorizzata in server che consumano energia 24/7 per il raffreddamento."},
+    {q: "5. Cos'è l'impronta carbonica?", a: "La quantità totale di gas serra generata dalle nostre azioni quotidiane."},
+    {q: "6. Green Hero: chi è?", a: "Un utente che adotta pratiche digitali e fisiche ad impatto quasi zero."},
+    {q: "7. Cos'è un datacenter?", a: "Una struttura fisica che ospita migliaia di computer che fanno funzionare internet."},
+    {q: "8. Come riciclare i dispositivi?", a: "Portali nelle isole ecologiche RAEE; contengono metalli rari riutilizzabili."},
+    {q: "9. Vantaggi delle rinnovabili?", a: "Zero emissioni di CO2 e indipendenza dai combustibili fossili."},
+    {q: "10. Cos'è l'ecodesign?", a: "Progettare prodotti pensando al loro smaltimento e impatto fin dall'inizio."},
+    {q: "11. Perché evitare lo streaming 4K?", a: "Richiede una trasmissione dati enorme, aumentando il consumo energetico dei server."},
+    {q: "12. Cosa sono i RAEE?", a: "Rifiuti di Apparecchiature Elettriche ed Elettroniche (computer, smartphone, ecc.)."},
+    {q: "13. Smart working e ambiente?", a: "Riduce gli spostamenti in auto, diminuendo drasticamente le emissioni di CO2."},
+    {q: "14. Cos'è il cloud sostenibile?", a: "Servizi di archiviazione dati alimentati esclusivamente da fonti rinnovabili."},
+    {q: "15. Come risparmiare batteria?", a: "Riduci la luminosità e disattiva il GPS e il Bluetooth quando non servono."},
+    {q: "16. Obiettivo di E-Roots?", a: "Educare le persone a un uso consapevole e sostenibile della tecnologia."},
+    {q: "17. Cos'è la domotica green?", a: "Sistemi intelligenti che regolano riscaldamento e luci per evitare sprechi."},
+    {q: "18. Importanza delle foreste?", a: "Assorbono la CO2 e sono i polmoni fondamentali del nostro pianeta."},
+    {q: "19. Cos'è il Green Computing?", a: "Lo studio e la pratica di utilizzare le risorse informatiche in modo efficiente."},
+    {q: "20. Cosa posso fare da oggi?", a: "Inizia eliminando le vecchie mail inutili e partecipa al nostro quiz!"}
 ];
 
 const optDiv = document.getElementById("options");
@@ -279,8 +277,10 @@ questions.forEach(item => {
     btn.className = "question-btn";
     btn.innerText = item.q;
     btn.onclick = () => {
-        document.getElementById("chatOutput").innerHTML += `<p><b>IA:</b> ${item.a}</p>`;
-        document.getElementById("chatOutput").scrollTop = document.getElementById("chatOutput").scrollHeight;
+        const output = document.getElementById("chatOutput");
+        output.innerHTML += `<p style="margin-top:10px; color:var(--primary)"><b>Tu:</b> ${item.q}</p>`;
+        output.innerHTML += `<p><b>IA:</b> ${item.a}</p>`;
+        output.scrollTop = output.scrollHeight;
     };
     optDiv.appendChild(btn);
 });
