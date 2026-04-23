@@ -83,7 +83,6 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 }
 .btn-cta:hover { transform: scale(1.05); }
 
-/* CHATBOT POTENZIATO */
 .chatbot-container { position: fixed; bottom: 25px; right: 25px; z-index: 1002; }
 #chat-toggle {
     width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
@@ -102,9 +101,8 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 .question-btn {
     display: block; width: 100%; text-align: left; margin-bottom: 6px; padding: 10px;
     background: var(--card-bg); color: var(--text); border: 1px solid var(--primary);
-    border-radius: 10px; cursor: pointer; font-size: 0.85rem; transition: 0.2s;
+    border-radius: 10px; cursor: pointer; font-size: 0.85rem;
 }
-.question-btn:hover { background: var(--primary); color: white; }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
 </style>
@@ -130,11 +128,10 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <section id="problema">
     <div class="card">
         <h2>La Sfida Ambientale</h2>
-        <p>Il cambiamento climatico richiede soluzioni urgenti. E-Roots promuove il digitale come strumento per monitorare e ridurre il nostro impatto ambientale.</p>
-        <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Foresta">
-        
+        <p>Il cambiamento climatico richiede soluzioni urgenti. E-Roots promuove il digitale come strumento per monitorare e ridurre l'impatto ambientale.</p>
+        <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Ambiente">
         <p style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 12px; margin-top: 20px; font-weight: 600;">
-            💡 Hai domande? Clicca sull'icona della piantina 🌱 in basso a destra per parlare con il nostro assistente virtuale (ora con 20 risposte!).
+            💡 Hai domande? Clicca sulla piantina 🌱 in basso a destra per parlare con l'assistente (20 risposte!).
         </p>
     </div>
 </section>
@@ -142,7 +139,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 <section id="grafico">
     <div class="card">
         <h2>Risultati Community (Live)</h2>
-        <p>Ecco come si sta muovendo la nostra community in tempo reale basato sul quiz.</p>
+        <p>Distribuzione dei profili in tempo reale basata sui risultati del quiz.</p>
         <canvas id="myChart"></canvas>
     </div>
 </section>
@@ -151,7 +148,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     <div class="card">
         <h2>Fai il Quiz</h2>
         <p>Verifica il tuo livello di sostenibilità e contribuisci al grafico live.</p>
-        <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLScVqnxy_huKFoYHJo575nPb1BhBCjf-cGUKhKP4-r0vfRnF3w/viewform" target="_blank">Inizia Quiz</a>
+        <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyTaEiWHkx3blnL6x2wVB1vPGj8sSBSSkJ9aeqHTSL6GsBTQ/viewform?usp=dialog" target="_blank">Inizia Quiz</a>
     </div>
 </section>
 
@@ -177,28 +174,26 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
             <span onclick="toggleChat()" style="cursor:pointer">✖</span>
         </div>
         <div class="chat-output" id="chatOutput">
-            <p><b>IA:</b> Ciao! Sono l'assistente di E-Roots. Scegli una delle 20 domande per approfondire!</p>
+            <p><b>IA:</b> Ciao! Scegli una delle 20 domande per approfondire.</p>
         </div>
         <div class="chat-options" id="options"></div>
     </div>
 </div>
 
 <script>
-// --- LOGICA TEMA E PROGRESSO ---
+// --- TEMA E PROGRESSO ---
 window.onscroll = function() {
     let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
 };
-
 function toggleTheme() { document.body.classList.toggle('dark-theme'); }
-
 const obs = new IntersectionObserver((es) => {
     es.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
 }, { threshold: 0.1 });
 document.querySelectorAll("section").forEach(s => obs.observe(s));
 
-// --- LOGICA GRAFICO DINAMICO (COLONNA 9) ---
+// --- GRAFICO DINAMICO ---
 const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRndRkw_3MQlN4xojmlirPIAu8j9_C1R88u_1v2XxEyptMcqZmoQJcM1cq9355TC5DPAx8JRQVjdg0q/pub?output=csv';
 
 async function updateChart() {
@@ -206,19 +201,17 @@ async function updateChart() {
         const response = await fetch(sheetURL);
         const data = await response.text();
         const rows = data.split('\n').slice(1); 
-
         let counts = { 'Green Hero': 0, 'Eco in crescita': 0, 'Energy Spreader': 0 };
 
         rows.forEach(row => {
             const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            // Indice 9 come richiesto
             const ruolo = columns[9]?.trim().replace(/"/g, ""); 
             if (counts[ruolo] !== undefined) counts[ruolo]++;
         });
 
         myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
         myChart.update();
-    } catch (e) { console.error("Errore caricamento dati:", e); }
+    } catch (e) { console.error("Errore:", e); }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
@@ -227,7 +220,6 @@ const myChart = new Chart(ctx, {
     data: {
         labels: ['Green Hero', 'Eco in crescita', 'Energy Spreader'],
         datasets: [{
-            label: 'Partecipanti',
             data: [0, 0, 0],
             backgroundColor: ['#2ecc71', '#3498db', '#e74c3c'],
             borderRadius: 8
@@ -239,36 +231,35 @@ const myChart = new Chart(ctx, {
         scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
     }
 });
-
 updateChart();
 
-// --- CHATBOT CON 20 DOMANDE ---
+// --- CHATBOT (20 RISPOSTE) ---
 function toggleChat() {
     const win = document.getElementById("chatWindow");
     win.style.display = (win.style.display === "flex") ? "none" : "flex";
 }
 
 const questions = [
-    {q: "1. Cos'è l'energia sostenibile?", a: "È energia da fonti che non si esauriscono, come sole, vento e acqua."},
-    {q: "2. Come ridurre i consumi digitali?", a: "Chiudi le schede inutilizzate, svuota il cestino mail e usa il tema scuro."},
-    {q: "3. Cos'è l'IA per l'ambiente?", a: "Algoritmi che ottimizzano i consumi energetici e i trasporti nelle città."},
-    {q: "4. Perché le email inquinano?", a: "Ogni mail è memorizzata in server che consumano energia 24/7 per il raffreddamento."},
-    {q: "5. Cos'è l'impronta carbonica?", a: "La quantità totale di gas serra generata dalle nostre azioni quotidiane."},
-    {q: "6. Green Hero: chi è?", a: "Un utente che adotta pratiche digitali e fisiche ad impatto quasi zero."},
-    {q: "7. Cos'è un datacenter?", a: "Una struttura fisica che ospita migliaia di computer che fanno funzionare internet."},
-    {q: "8. Come riciclare i dispositivi?", a: "Portali nelle isole ecologiche RAEE; contengono metalli rari riutilizzabili."},
-    {q: "9. Vantaggi delle rinnovabili?", a: "Zero emissioni di CO2 e indipendenza dai combustibili fossili."},
-    {q: "10. Cos'è l'ecodesign?", a: "Progettare prodotti pensando al loro smaltimento e impatto fin dall'inizio."},
-    {q: "11. Perché evitare lo streaming 4K?", a: "Richiede una trasmissione dati enorme, aumentando il consumo energetico dei server."},
-    {q: "12. Cosa sono i RAEE?", a: "Rifiuti di Apparecchiature Elettriche ed Elettroniche (computer, smartphone, ecc.)."},
-    {q: "13. Smart working e ambiente?", a: "Riduce gli spostamenti in auto, diminuendo drasticamente le emissioni di CO2."},
-    {q: "14. Cos'è il cloud sostenibile?", a: "Servizi di archiviazione dati alimentati esclusivamente da fonti rinnovabili."},
-    {q: "15. Come risparmiare batteria?", a: "Riduci la luminosità e disattiva il GPS e il Bluetooth quando non servono."},
-    {q: "16. Obiettivo di E-Roots?", a: "Educare le persone a un uso consapevole e sostenibile della tecnologia."},
-    {q: "17. Cos'è la domotica green?", a: "Sistemi intelligenti che regolano riscaldamento e luci per evitare sprechi."},
-    {q: "18. Importanza delle foreste?", a: "Assorbono la CO2 e sono i polmoni fondamentali del nostro pianeta."},
-    {q: "19. Cos'è il Green Computing?", a: "Lo studio e la pratica di utilizzare le risorse informatiche in modo efficiente."},
-    {q: "20. Cosa posso fare da oggi?", a: "Inizia eliminando le vecchie mail inutili e partecipa al nostro quiz!"}
+    {q: "1. Cos'è l'energia sostenibile?", a: "È energia da fonti inesauribili come sole e vento."},
+    {q: "2. Come ridurre i consumi digitali?", a: "Spegni lo standby e usa il tema scuro sui dispositivi."},
+    {q: "3. Cos'è l'IA per l'ambiente?", a: "Algoritmi che ottimizzano l'energia nelle città e industrie."},
+    {q: "4. Perché le email inquinano?", a: "Occupano spazio in server che consumano energia 24/7."},
+    {q: "5. Cos'è l'impronta carbonica?", a: "I gas serra prodotti dalle nostre attività quotidiane."},
+    {q: "6. Green Hero: chi è?", a: "Un utente con abitudini digitali a bassissimo impatto."},
+    {q: "7. Cos'è un datacenter?", a: "Struttura che ospita i server necessari per internet."},
+    {q: "8. Come riciclare i dispositivi?", a: "Portali nei centri RAEE per recuperare i metalli rari."},
+    {q: "9. Vantaggi delle rinnovabili?", a: "Zero CO2 e indipendenza energetica dai fossili."},
+    {q: "10. Cos'è l'ecodesign?", a: "Progettare prodotti pensando al loro riciclo futuro."},
+    {q: "11. Perché evitare il 4K inutile?", a: "Il traffico dati pesante aumenta il consumo energetico dei server."},
+    {q: "12. Cosa sono i RAEE?", a: "Rifiuti elettrici ed elettronici da smaltire con cura."},
+    {q: "13. Smart working e ambiente?", a: "Riduce il traffico urbano e le emissioni dei trasporti."},
+    {q: "14. Cos'è il cloud sostenibile?", a: "Storage dati alimentato solo da energia pulita."},
+    {q: "15. Come risparmiare batteria?", a: "Luminosità bassa e disattivazione GPS non necessari."},
+    {q: "16. Obiettivo di E-Roots?", a: "Promuovere l'uso consapevole della tecnologia per il bene del pianeta."},
+    {q: "17. Cos'è la domotica green?", a: "Casa intelligente che taglia sprechi di luce e riscaldamento."},
+    {q: "18. Importanza delle foreste?", a: "Assorbono la CO2 in eccesso prodotta dall'uomo."},
+    {q: "19. Cos'è il Green Computing?", a: "Usare l'informatica in modo efficiente ed eco-compatibile."},
+    {q: "20. Cosa posso fare oggi?", a: "Svuota le mail inutili e fai scelte tech più durature."}
 ];
 
 const optDiv = document.getElementById("options");
@@ -278,7 +269,7 @@ questions.forEach(item => {
     btn.innerText = item.q;
     btn.onclick = () => {
         const output = document.getElementById("chatOutput");
-        output.innerHTML += `<p style="margin-top:10px; color:var(--primary)"><b>Tu:</b> ${item.q}</p>`;
+        output.innerHTML += `<p style="color:var(--primary); margin-top:10px;"><b>Tu:</b> ${item.q}</p>`;
         output.innerHTML += `<p><b>IA:</b> ${item.a}</p>`;
         output.scrollTop = output.scrollHeight;
     };
