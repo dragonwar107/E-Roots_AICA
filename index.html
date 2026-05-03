@@ -106,6 +106,7 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
 
+/* Griglia informativa */
 .info-grid {
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -135,6 +136,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     <a href="#quiz" class="btn-cta">Inizia Ora</a>
 </div>
 
+<!-- 1. SEZIONE SFIDA AMBIENTALE (AMPLIATA) -->
 <section id="problema">
     <div class="card">
         <h2>La Sfida Ambientale & Il Nostro Impegno</h2>
@@ -166,27 +168,29 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     </div>
 </section>
 
-<!-- SEZIONE QUIZ SPOSTATA QUI -->
+<!-- 2. SEZIONE QUIZ (PRIMA DEI RISULTATI) -->
 <section id="quiz" style="text-align: center;">
     <div class="card">
         <h2>Fai il Quiz</h2>
-        <p>Verifica il tuo livello di sostenibilità e contribuisci al grafico live della community.</p>
+        <p>Verifica il tuo livello di sostenibilità digitale e scopri che tipo di "radice" sei. Il tuo contributo aggiornerà i dati della community in tempo reale.</p>
         <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyTaEiWHkx3blnL6x2wVB1vPGj8sSBSSkJ9aeqHTSL6GsBTQ/viewform?usp=dialog" target="_blank">Inizia Quiz</a>
     </div>
 </section>
 
+<!-- 3. SEZIONE RISULTATI LIVE (DOPO IL QUIZ) -->
 <section id="grafico">
     <div class="card">
         <h2>Risultati Community (Live)</h2>
-        <p>Distribuzione dei profili in tempo reale basata sui risultati del quiz sopra.</p>
+        <p>Questa è la distribuzione attuale dei profili sostenibili basata sulle risposte di chi ha già partecipato al quiz.</p>
         <canvas id="myChart"></canvas>
     </div>
 </section>
 
+<!-- 4. AREA DOWNLOAD -->
 <section id="download" style="text-align: center; padding-top: 0;">
     <div class="card" style="background: rgba(46, 204, 113, 0.1); border: 2px dashed var(--primary);">
         <h2>Area Download</h2>
-        <p>Scarica il report ufficiale per consultare tutti i dettagli della nostra ricerca.</p>
+        <p>Scarica il report ufficiale per consultare tutti i dettagli della nostra ricerca e le strategie per un web più pulito.</p>
         <a class="btn-cta" href="https://drive.google.com/uc?export=download&id=1k-Bh9rDbIniRiLZrPle7eek0bqIq3z8i" target="_blank" style="background: #2c3e50;">
             📥 Scarica il Report (PDF)
         </a>
@@ -197,6 +201,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     <p>E-Roots © 2026</p>
 </footer>
 
+<!-- CHATBOT -->
 <div class="chatbot-container">
     <div id="chat-toggle" onclick="toggleChat()">🌱</div>
     <div class="chatbot-window" id="chatWindow">
@@ -205,7 +210,7 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
             <span onclick="toggleChat()" style="cursor:pointer">✖</span>
         </div>
         <div class="chat-output" id="chatOutput">
-            <p><b>IA:</b> Ciao! Scegli una delle 20 domande per approfondire.</p>
+            <p><b>IA:</b> Ciao! Scegli una delle 20 domande per approfondire le tematiche di E-Roots.</p>
         </div>
         <div class="chat-options" id="options"></div>
     </div>
@@ -246,7 +251,7 @@ async function updateChart() {
 
         myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
         myChart.update();
-    } catch (e) { console.error("Errore nel caricamento dati:", e); }
+    } catch (e) { console.error("Errore dati:", e); }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
