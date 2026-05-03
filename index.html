@@ -106,7 +106,6 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
 
-/* Stili per la griglia informativa */
 .info-grid {
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -167,19 +166,20 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     </div>
 </section>
 
-<section id="grafico">
-    <div class="card">
-        <h2>Risultati Community (Live)</h2>
-        <p>Distribuzione dei profili in tempo reale basata sui risultati del quiz.</p>
-        <canvas id="myChart"></canvas>
-    </div>
-</section>
-
+<!-- SEZIONE QUIZ SPOSTATA QUI -->
 <section id="quiz" style="text-align: center;">
     <div class="card">
         <h2>Fai il Quiz</h2>
-        <p>Verifica il tuo livello di sostenibilità e contribuisci al grafico live.</p>
+        <p>Verifica il tuo livello di sostenibilità e contribuisci al grafico live della community.</p>
         <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyTaEiWHkx3blnL6x2wVB1vPGj8sSBSSkJ9aeqHTSL6GsBTQ/viewform?usp=dialog" target="_blank">Inizia Quiz</a>
+    </div>
+</section>
+
+<section id="grafico">
+    <div class="card">
+        <h2>Risultati Community (Live)</h2>
+        <p>Distribuzione dei profili in tempo reale basata sui risultati del quiz sopra.</p>
+        <canvas id="myChart"></canvas>
     </div>
 </section>
 
@@ -268,7 +268,7 @@ const myChart = new Chart(ctx, {
 });
 updateChart();
 
-// --- CHATBOT (20 RISPOSTE) ---
+// --- CHATBOT ---
 function toggleChat() {
     const win = document.getElementById("chatWindow");
     win.style.display = (win.style.display === "flex") ? "none" : "flex";
