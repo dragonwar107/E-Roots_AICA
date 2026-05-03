@@ -105,6 +105,17 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
+
+/* Stili per la griglia informativa */
+.info-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    margin: 30px 0; 
+    text-align: left;
+}
+.info-item h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
+.info-item p { font-size: 0.95rem; margin: 0; color: var(--text-muted); }
 </style>
 </head>
 
@@ -127,11 +138,31 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
 
 <section id="problema">
     <div class="card">
-        <h2>La Sfida Ambientale</h2>
-        <p>Il cambiamento climatico richiede soluzioni urgenti. E-Roots promuove il digitale come strumento per monitorare e ridurre l'impatto ambientale.</p>
+        <h2>La Sfida Ambientale & Il Nostro Impegno</h2>
+        <p>
+            Il cambiamento climatico non è più una minaccia lontana, ma una realtà che richiede soluzioni immediate e sistemiche. In questo scenario, la tecnologia non deve essere parte del problema, ma il cuore della soluzione. 
+            <strong>E-Roots</strong> nasce per colmare il divario tra progresso digitale e conservazione della natura, trasformando i bit in ossigeno per il pianeta.
+        </p>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <h4>📊 Monitoraggio Intelligente</h4>
+                <p>Utilizziamo l'analisi dei dati e l'IA per mappare l'impronta di carbonio delle infrastrutture digitali, rendendo visibile l'impatto energetico di ogni click.</p>
+            </div>
+            <div class="info-item">
+                <h4>🌱 Efficienza Radicale</h4>
+                <p>Promuoviamo l'adozione di software "green" e architetture cloud alimentate da fonti rinnovabili per ridurre drasticamente lo spreco energetico globale.</p>
+            </div>
+            <div class="info-item">
+                <h4>🤝 Consapevolezza Collettiva</h4>
+                <p>Crediamo che l'innovazione serva a poco senza un cambiamento culturale. Formiamo una community di utenti digitali responsabili per un futuro sostenibile.</p>
+            </div>
+        </div>
+
         <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Ambiente">
+        
         <p style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 12px; margin-top: 20px; font-weight: 600;">
-            💡 Hai domande? Clicca sulla piantina 🌱 in basso a destra per parlare con l'assistente.
+            💡 Hai domande su come la tecnologia possa salvare il pianeta? Clicca sulla piantina 🌱 in basso a destra per parlare con il nostro assistente virtuale.
         </p>
     </div>
 </section>
@@ -187,7 +218,11 @@ window.onscroll = function() {
     let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
 };
-function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+function toggleTheme() { 
+    document.body.classList.toggle('dark-theme'); 
+    const btn = document.querySelector('.theme-toggle');
+    btn.innerText = document.body.classList.contains('dark-theme') ? "☀️ Light Mode" : "🌙 Dark Mode";
+}
 const obs = new IntersectionObserver((es) => {
     es.forEach(e => { if(e.isIntersecting) e.target.classList.add("show"); });
 }, { threshold: 0.1 });
@@ -211,7 +246,7 @@ async function updateChart() {
 
         myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
         myChart.update();
-    } catch (e) { console.error("Errore:", e); }
+    } catch (e) { console.error("Errore nel caricamento dati:", e); }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
