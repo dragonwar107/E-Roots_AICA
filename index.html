@@ -83,6 +83,28 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 }
 .btn-cta:hover { transform: scale(1.05); }
 
+/* Stili Calcolatore */
+.calc-container { margin-top: 30px; text-align: left; }
+.calc-row { margin-bottom: 20px; }
+.calc-row label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+input[type=range] { width: 100%; cursor: pointer; accent-color: var(--primary); }
+.result-box { 
+    background: var(--nav-bg); color: var(--primary); padding: 20px; 
+    border-radius: 15px; text-align: center; margin-top: 25px; 
+}
+.result-box span { font-size: 2rem; font-weight: 800; display: block; color: #fff; }
+
+/* Griglia informativa */
+.info-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    margin: 30px 0; 
+    text-align: left;
+}
+.info-item h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
+.info-item p { font-size: 0.95rem; margin: 0; color: var(--text-muted); }
+
 .chatbot-container { position: fixed; bottom: 25px; right: 25px; z-index: 1002; }
 #chat-toggle {
     width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
@@ -105,17 +127,6 @@ h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem; }
 }
 
 footer { padding: 40px; text-align: center; background: var(--nav-bg); color: white; }
-
-/* Griglia informativa */
-.info-grid {
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 25px; 
-    margin: 30px 0; 
-    text-align: left;
-}
-.info-item h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
-.info-item p { font-size: 0.95rem; margin: 0; color: var(--text-muted); }
 </style>
 </head>
 
@@ -133,64 +144,85 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     <p style="font-size: 1.5rem; margin-bottom: 10px;">L'innovazione digitale al servizio del pianeta.</p>
     <p class="sub-text">Ogni radice digitale che piantiamo oggi diventa l'albero del domani. Non aspettare che qualcun altro faccia la prima mossa, diventa parte del cambiamento. Il momento è adesso.</p>
     <p class="motto">"NON SI PUÒ FAR FIORIRE UN ALBERO A PIACIMENTO, NÈ FARLO FRUTTIFICARE PRIMA DEL SUO TEMPO."</p>
-    <a href="#quiz" class="btn-cta">Inizia Ora</a>
+    <a href="#calcolatore" class="btn-cta">Inizia Ora</a>
 </div>
 
-<!-- 1. SEZIONE SFIDA AMBIENTALE (AMPLIATA) -->
 <section id="problema">
     <div class="card">
         <h2>La Sfida Ambientale & Il Nostro Impegno</h2>
         <p>
-            Il cambiamento climatico non è più una minaccia lontana, ma una realtà che richiede soluzioni immediate e sistemiche. In questo scenario, la tecnologia non deve essere parte del problema, ma il cuore della soluzione. 
-            <strong>E-Roots</strong> nasce per colmare il divario tra progresso digitale e conservazione della natura, trasformando i bit in ossigeno per il pianeta.
+            Il cambiamento climatico richiede soluzioni immediate. In questo scenario, la tecnologia non deve essere parte del problema, ma il cuore della soluzione. 
+            <strong>E-Roots</strong> trasforma i bit in ossigeno per il pianeta.
         </p>
         
         <div class="info-grid">
             <div class="info-item">
                 <h4>📊 Monitoraggio Intelligente</h4>
-                <p>Utilizziamo l'analisi dei dati e l'IA per mappare l'impronta di carbonio delle infrastrutture digitali, rendendo visibile l'impatto energetico di ogni click.</p>
+                <p>Analizziamo l'impronta di carbonio delle infrastrutture digitali e dell'IA.</p>
             </div>
             <div class="info-item">
                 <h4>🌱 Efficienza Radicale</h4>
-                <p>Promuoviamo l'adozione di software "green" e architetture cloud alimentate da fonti rinnovabili per ridurre drasticamente lo spreco energetico globale.</p>
+                <p>Promuoviamo software "green" e cloud alimentati da fonti rinnovabili.</p>
             </div>
             <div class="info-item">
                 <h4>🤝 Consapevolezza Collettiva</h4>
-                <p>Crediamo che l'innovazione serva a poco senza un cambiamento culturale. Formiamo una community di utenti digitali responsabili per un futuro sostenibile.</p>
+                <p>Formiamo una community di utenti responsabili per un futuro sostenibile.</p>
             </div>
         </div>
 
         <img class="main-img" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013" alt="Ambiente">
-        
-        <p style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 12px; margin-top: 20px; font-weight: 600;">
-            💡 Hai domande su come la tecnologia possa salvare il pianeta? Clicca sulla piantina 🌱 in basso a destra per parlare con il nostro assistente virtuale.
-        </p>
     </div>
 </section>
 
-<!-- 2. SEZIONE QUIZ (PRIMA DEI RISULTATI) -->
+<!-- NUOVA SEZIONE: CALCOLATORE IMPRONTA DIGITALE -->
+<section id="calcolatore">
+    <div class="card" style="border: 2px solid var(--primary);">
+        <h2>Quanto pesa il tuo click? 👣</h2>
+        <p>Usa gli slider per calcolare la CO2 prodotta annualmente dalle tue abitudini digitali.</p>
+        
+        <div class="calc-container">
+            <div class="calc-row">
+                <label>Ore di Streaming Video (Netflix/YouTube) al giorno: <span id="val-stream">2</span>h</label>
+                <input type="range" id="stream" min="0" max="12" value="2" oninput="calcImpact()">
+            </div>
+            <div class="calc-row">
+                <label>Email inviate/ricevute al giorno: <span id="val-mail">20</span></label>
+                <input type="range" id="mail" min="0" max="200" value="20" oninput="calcImpact()">
+            </div>
+            <div class="calc-row">
+                <label>Ore sui Social Media al giorno: <span id="val-social">3</span>h</label>
+                <input type="range" id="social" min="0" max="12" value="3" oninput="calcImpact()">
+            </div>
+
+            <div class="result-box">
+                La tua impronta digitale annuale è di:
+                <span id="total-co2">45.2 Kg CO2</span>
+                <p style="font-size: 0.8rem; color: #bbb; margin-top: 10px;">Equivale a piantare circa <span id="trees" style="display:inline; font-size: 1rem; color: var(--primary);">2</span> alberi all'anno per compensare.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="quiz" style="text-align: center;">
     <div class="card">
-        <h2>Fai il Quiz</h2>
-        <p>Verifica il tuo livello di sostenibilità digitale e scopri che tipo di "radice" sei. Il tuo contributo aggiornerà i dati della community in tempo reale.</p>
-        <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyTaEiWHkx3blnL6x2wVB1vPGj8sSBSSkJ9aeqHTSL6GsBTQ/viewform?usp=dialog" target="_blank">Inizia Quiz</a>
+        <h2>Fai il Quiz Completo</h2>
+        <p>Vuoi un'analisi più dettagliata? Il tuo contributo aggiornerà i dati della community.</p>
+        <a class="btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdyTaEiWHkx3blnL6x2wVB1vPGj8sSBSSkJ9aeqHTSL6GsBTQ/viewform?usp=dialog" target="_blank">Vai al Quiz Professionale</a>
     </div>
 </section>
 
-<!-- 3. SEZIONE RISULTATI LIVE (DOPO IL QUIZ) -->
 <section id="grafico">
     <div class="card">
         <h2>Risultati Community (Live)</h2>
-        <p>Questa è la distribuzione attuale dei profili sostenibili basata sulle risposte di chi ha già partecipato al quiz.</p>
+        <p>Distribuzione dei profili basata sui quiz completati.</p>
         <canvas id="myChart"></canvas>
     </div>
 </section>
 
-<!-- 4. AREA DOWNLOAD -->
 <section id="download" style="text-align: center; padding-top: 0;">
     <div class="card" style="background: rgba(46, 204, 113, 0.1); border: 2px dashed var(--primary);">
         <h2>Area Download</h2>
-        <p>Scarica il report ufficiale per consultare tutti i dettagli della nostra ricerca e le strategie per un web più pulito.</p>
+        <p>Scarica il report ufficiale per la ricerca completa.</p>
         <a class="btn-cta" href="https://drive.google.com/uc?export=download&id=1k-Bh9rDbIniRiLZrPle7eek0bqIq3z8i" target="_blank" style="background: #2c3e50;">
             📥 Scarica il Report (PDF)
         </a>
@@ -201,7 +233,6 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
     <p>E-Roots © 2026</p>
 </footer>
 
-<!-- CHATBOT -->
 <div class="chatbot-container">
     <div id="chat-toggle" onclick="toggleChat()">🌱</div>
     <div class="chatbot-window" id="chatWindow">
@@ -210,13 +241,33 @@ footer { padding: 40px; text-align: center; background: var(--nav-bg); color: wh
             <span onclick="toggleChat()" style="cursor:pointer">✖</span>
         </div>
         <div class="chat-output" id="chatOutput">
-            <p><b>IA:</b> Ciao! Scegli una delle 20 domande per approfondire le tematiche di E-Roots.</p>
+            <p><b>IA:</b> Ciao! Scegli una domanda per approfondire.</p>
         </div>
         <div class="chat-options" id="options"></div>
     </div>
 </div>
 
 <script>
+// --- CALCOLATORE LOGICA ---
+function calcImpact() {
+    const s = document.getElementById('stream').value;
+    const m = document.getElementById('mail').value;
+    const so = document.getElementById('social').value;
+    
+    document.getElementById('val-stream').innerText = s;
+    document.getElementById('val-mail').innerText = m;
+    document.getElementById('val-social').innerText = so;
+
+    // Calcolo approssimativo annuale (coefficienti CO2 medi)
+    // Streaming: ~50g/h, Mail: ~4g/cad, Social: ~30g/h
+    const annualCO2 = ((s * 0.05) + (m * 0.004) + (so * 0.03)) * 365;
+    const treesNeeded = Math.ceil(annualCO2 / 20); // Un albero assorbe circa 20kg/anno
+
+    document.getElementById('total-co2').innerText = annualCO2.toFixed(1) + " Kg CO2";
+    document.getElementById('trees').innerText = treesNeeded;
+}
+calcImpact(); // Inizializza al caricamento
+
 // --- TEMA E PROGRESSO ---
 window.onscroll = function() {
     let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -251,7 +302,7 @@ async function updateChart() {
 
         myChart.data.datasets[0].data = [counts['Green Hero'], counts['Eco in crescita'], counts['Energy Spreader']];
         myChart.update();
-    } catch (e) { console.error("Errore dati:", e); }
+    } catch (e) { console.error("Errore:", e); }
 }
 
 const ctx = document.getElementById('myChart').getContext('2d');
